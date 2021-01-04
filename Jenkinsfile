@@ -59,9 +59,9 @@ pipeline {
                             // So we cannot query the widlcard domain of the ingress controller
                             // Nor the auto genereted host of a route
                             openshift.expose("svc/${env.APP}", "--hostname ${env.PRJ}.${env.DOMAIN}")
-                            echo("Wait for deployment from dc ${env.APP} to finish") 
+                            echo("Wait for deployment ${env.APP} to finish") 
                             timeout(5) {
-                                openshift.selector('dc', "${env.APP}").rollout().status()
+                                openshift.selector('deployment', "${env.APP}").rollout().status()
                             }
                         }
                     }
